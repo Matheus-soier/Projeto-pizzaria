@@ -5,5 +5,30 @@ const qsa = el => document.querySelectorAll(el);
 pizzaJson.map((item, index)=>{
     let pizzaItem = qs('.models .pizza-item').cloneNode(true); //Clona elementos pai e filho
     //Preencher informações
+
+    pizzaItem.setAttribute('data-key', index);
+    //Formatando o preço com Template String + toFixed 
+    pizzaItem.querySelector('.pizza-item--img img').src = item.img; 
+    pizzaItem.querySelector('.pizza-item--price').innerHTML = `R$ ${item.price.toFixed(2)}`; 
+    pizzaItem.querySelector('.pizza-item--name').innerHTML = item.name;
+    pizzaItem.querySelector('.pizza-item--desc').innerHTML = item.description;
+    pizzaItem.querySelector('a').addEventListener('click', e => {
+        e.preventDefault();
+
+        //Selecionando o atributo do elemento pizza item mais proximo
+        let key = e.target.closest('.pizza-item').getAttribute('data-key');
+
+        qs('.pizzaBig img').src = pizzaJson[key].img;
+        qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
+        qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
+
+        qs('.pizzaWindowArea').style.opacity = "0";
+        qs('.pizzaWindowArea').style.display = "flex";
+    
+        setTimeout(()=>{
+            qs('.pizzaWindowArea').style.opacity = "1";
+        }, 200);
+    });
+
    qs('.pizza-area').append(pizzaItem); // Adicionando elementos sem sobrepor
 });
