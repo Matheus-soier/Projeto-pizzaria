@@ -21,6 +21,14 @@ pizzaJson.map((item, index)=>{
         qs('.pizzaBig img').src = pizzaJson[key].img;
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
+        qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`
+        qs('.pizzaInfo--size.selected').classList.remove('selected');
+        qsa('.pizzaInfo--size').forEach((size, sizeIndex)=>{
+            size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
+            if(sizeIndex === 2) {
+                qs('.pizzaInfo--size').classList.add('selected');
+            }
+        });
 
         qs('.pizzaWindowArea').style.opacity = "0";
         qs('.pizzaWindowArea').style.display = "flex";
