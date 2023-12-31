@@ -42,19 +42,41 @@ pizzaJson.map((item, index)=>{
             qs('.pizzaWindowArea').style.opacity = "1";
         }, 200);
 
-        qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item, index)=>{
+        qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>{
             item.addEventListener('click', closeWindown);
         });
+
+        qs('.pizzaInfo--qtmais').addEventListener('mouseup', qtMais);
+        qs('.pizzaInfo--qtmenos').addEventListener('mouseup', qtMenos);
+
+        qsa('.pizzaInfo--size').forEach((size)=>{
+           size.addEventListener('click', ()=>{
+            qs('.pizzaInfo--size.selected').classList.remove('selected');
+            size.classList.add('selected');
+           });
+        });
+
     });
 
    qs('.pizza-area').append(pizzaItem); // Adicionando elementos sem sobrepor
 });
 
 //Functions
-
 function closeWindown() {
     qs('.pizzaWindowArea').style.opacity = "0";
     setTimeout(()=>{
         qs('.pizzaWindowArea').style.display = "none";
     }, 500);
+}
+
+function qtMenos() {
+    if(modalQt > 1) {
+        modalQt--;
+        qs('.pizzaInfo--qt').innerHTML = modalQt;
+    }
+}
+
+function qtMais() {
+    modalQt++;
+    qs('.pizzaInfo--qt').innerHTML = modalQt;
 }
