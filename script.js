@@ -1,4 +1,6 @@
+let cart = [];
 let modalQt = 1;
+let modalKey;
 
 // Simplificando QuerySelector/ QuerySelectorAll
 const qs = el => document.querySelector(el); 
@@ -19,6 +21,7 @@ pizzaJson.map((item, index)=>{
 
         //Selecionando o atributo do elemento pizza item mais proximo
         let key = e.target.closest('.pizza-item').getAttribute('data-key');
+        modalKey = key;
 
         modalQt = 1;
         qs('.pizzaBig img').src = pizzaJson[key].img;
@@ -54,6 +57,16 @@ pizzaJson.map((item, index)=>{
             qs('.pizzaInfo--size.selected').classList.remove('selected');
             size.classList.add('selected');
            });
+        });
+
+        qs('.pizzaInfo--addButton').addEventListener('click', ()=>{
+            // Qual pizza?
+            console.log(`Pizza: ${modalKey}`);
+            // Qual tamanho?
+            let size = qs('.pizzaInfo--size.selected').getAttribute('data-key');
+            console.log(`Size: ${size}`);
+            // Qual a quantidade?
+            console.log(`Quantidade: ${modalQt}`);
         });
 
     });
