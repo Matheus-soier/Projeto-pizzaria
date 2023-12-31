@@ -1,3 +1,5 @@
+let modalQt = 1;
+
 // Simplificando QuerySelector/ QuerySelectorAll
 const qs = el => document.querySelector(el); 
 const qsa = el => document.querySelectorAll(el);
@@ -18,6 +20,7 @@ pizzaJson.map((item, index)=>{
         //Selecionando o atributo do elemento pizza item mais proximo
         let key = e.target.closest('.pizza-item').getAttribute('data-key');
 
+        modalQt = 1;
         qs('.pizzaBig img').src = pizzaJson[key].img;
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
@@ -25,10 +28,12 @@ pizzaJson.map((item, index)=>{
         qs('.pizzaInfo--size.selected').classList.remove('selected');
         qsa('.pizzaInfo--size').forEach((size, sizeIndex)=>{
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
-            if(sizeIndex === 2) {
-                qs('.pizzaInfo--size').classList.add('selected');
+            if(sizeIndex == 2) {
+                size.classList.add('selected');
             }
         });
+
+        qs('.pizzaInfo--qt').innerHTML = modalQt;
 
         qs('.pizzaWindowArea').style.opacity = "0";
         qs('.pizzaWindowArea').style.display = "flex";
@@ -36,7 +41,20 @@ pizzaJson.map((item, index)=>{
         setTimeout(()=>{
             qs('.pizzaWindowArea').style.opacity = "1";
         }, 200);
+
+        qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item, index)=>{
+            item.addEventListener('click', closeWindown);
+        });
     });
 
    qs('.pizza-area').append(pizzaItem); // Adicionando elementos sem sobrepor
 });
+
+//Functions
+
+function closeWindown() {
+    qs('.pizzaWindowArea').style.opacity = "0";
+    setTimeout(()=>{
+        qs('.pizzaWindowArea').style.display = "none";
+    }, 500);
+}
