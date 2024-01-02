@@ -42,8 +42,12 @@ header {
 }
 
 aside {
-    background-color:#9ccbe6;
+    top: 0;
+    right: 0;
+    position: fixed;
+    background-color:#ffffff;
     width:0vw;
+    height: 100vh;
     font-family:'Hepta Slab', Helvetica, Arial;
     transition:all ease .2s;
     overflow-x:hidden;
@@ -318,12 +322,11 @@ h1 {
 .cart--finalizar {
     padding:20px 30px;
     border-radius:20px;
-    background-color:#48d05f;
+    background-color:#000000;
     color:#FFF;
     cursor:pointer;
     text-align:center;
     margin-top:20px;
-    border:2px solid #63f77c;
     transition: all ease .2s;
 }
 .cart--finalizar:hover {
