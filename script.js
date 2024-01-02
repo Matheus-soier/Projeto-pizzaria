@@ -13,7 +13,7 @@ pizzaJson.map((item, index)=>{
     pizzaItem.setAttribute('data-key', index);
     //Formatando o preço com Template String + toFixed 
     pizzaItem.querySelector('.pizza-item--img img').src = item.img; 
-    pizzaItem.querySelector('.pizza-item--price').innerHTML = `R$ ${item.price.toFixed(2)}`; 
+    pizzaItem.querySelector('.pizza-item--price').innerHTML = `R$ ${item.price[2].toFixed(2)}`; 
     pizzaItem.querySelector('.pizza-item--name').innerHTML = item.name;
     pizzaItem.querySelector('.pizza-item--desc').innerHTML = item.description;
     pizzaItem.querySelector('a').addEventListener('click', e => {
@@ -27,7 +27,7 @@ pizzaJson.map((item, index)=>{
         qs('.pizzaBig img').src = pizzaJson[key].img;
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
-        qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`
+        qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price[2].toFixed(2)}`
         qs('.pizzaInfo--size.selected').classList.remove('selected');
         qsa('.pizzaInfo--size').forEach((size, sizeIndex)=>{
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
@@ -59,14 +59,21 @@ pizzaJson.map((item, index)=>{
            });
         });
 
-        qs('.pizzaInfo--addButton').addEventListener('click', ()=>{
-            // Qual pizza?
-            console.log(`Pizza: ${modalKey}`);
-            // Qual tamanho?
-            let size = qs('.pizzaInfo--size.selected').getAttribute('data-key');
-            console.log(`Size: ${size}`);
-            // Qual a quantidade?
-            console.log(`Quantidade: ${modalQt}`);
+        qs('.pizzaInfo--addButton').addEventListener('click', addCart);
+
+        qsa('.pizzaInfo--size, .pizzaInfo--size span').forEach((element)=>{
+            element.addEventListener('click', (event)=>{
+                let sizeDiv = event.target.closest('.pizzaInfo--size');
+                let sizePriceIndex = sizeDiv.getAttribute('data-key');
+        
+                if (sizePriceIndex == 0) {
+                    qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[modalKey].price[0].toFixed(2)}`;
+                } else if (sizePriceIndex == 1) {
+                    qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[modalKey].price[1].toFixed(2)}`;
+                } else if (sizePriceIndex == 2) {
+                    qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[modalKey].price[2].toFixed(2)}`;
+                }
+            });
         });
 
     });
@@ -92,4 +99,14 @@ function qtMenos() {
 function qtMais() {
     modalQt++;
     qs('.pizzaInfo--qt').innerHTML = modalQt;
+}
+
+function addCart() {
+    let size = parseInt(qs('.pizzaInfo--size.selected').getAttribute('data-key'));
+            cart.push({
+                id:pizzaJson[modalKey].id,
+                size,
+                qt: modalQt
+            });
+    closeWindown()
 }
